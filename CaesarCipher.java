@@ -1,16 +1,40 @@
-import java.util.scanner;
+package com.company;
+
+import java.util.Scanner;
 
 public class Main{
-publuc static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-
-
-
-public static void main(String[] arg){
-Scanner scanner = new Scanner(System.in);
-System.out.println("Insert string: ");
-String letter = new String;
-letter = scanner.next();
-System.out.println(encrypt(letter, 3));
-System.out.println(discrypt(encrypt(letter, 3), 3));
-}
+    public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+    public static String encrypt (String plainText, int shiftKey){
+        plainText = plainText.toLowerCase();
+        String cipherText = "";
+        for(int i = 0; i < plainText.length(); i++){
+            int charPosition = ALPHABET.indexOf(plainText.charAt(i));
+            int keyVal = (charPosition + shiftKey) % 26;
+            char replaceVal = ALPHABET.charAt(keyVal);
+            cipherText += replaceVal;
+        }
+        return cipherText;
+    }
+    public static String decrypt (String cipherText, int shiftKey){
+        cipherText = cipherText.toLowerCase();
+        String plainText = "";
+        for(int i = 0; i < cipherText.length(); i++){
+            int charPosition = ALPHABET.indexOf(cipherText.charAt(i));
+            int keyVal = (charPosition - shiftKey) % 26;
+            if (keyVal < 0){
+                keyVal = ALPHABET.length() + keyVal;
+            }
+            char replaceVal = ALPHABET.charAt(keyVal);
+            plainText += replaceVal;
+        }
+        return plainText;
+    }
+    public static void main(String[] arg){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Insert string: ");
+        String letter = new String();
+        letter = scanner.next();
+        System.out.println(encrypt(letter, 3));
+        System.out.println(decrypt(encrypt(letter, 3), 3));
+    }
 }
